@@ -15,7 +15,7 @@
 1. download the folder
 2. unzip
 3. open file in IntelliJ (Select the folder that has a tiny black box on it. Not the parent folder)
-4. run the main method (named: DemoApplication)
+4. run the main method (named: DemoApplication.java)
 5. Open postman and host
 ## What to host: (GET)
 >>
