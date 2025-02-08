@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+//RestController Class
 
 @RestController
 public class RestAPIController {
 
     //Get list of agent uuids
     @GetMapping("/agents/list")
-    public Object getAllAgents() {
+    public Object agentslist() {
         try {
             String url = "https://valorant-api.com/v1/agents/";
             RestTemplate restTemplate = new RestTemplate();
@@ -26,13 +26,13 @@ public class RestAPIController {
             String jsonListResponse = restTemplate.getForObject(url, String.class);
             JsonNode root = mapper.readTree(jsonListResponse);
 
-            ArrayList<Object> agentsUUIDs = new ArrayList<>();
+            ArrayList<Object> agentsUUID = new ArrayList<>();
             for (JsonNode agentNode : root.path("data")) {
                 String uuid = agentNode.path("uuid").asText();
-                agentsUUIDs.add(uuid);
+                agentsUUID.add(uuid);
             }
 
-            return agentsUUIDs;
+            return agentsUUID;
 
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RestAPIController.class.getName()).log(Level.SEVERE, null, ex);

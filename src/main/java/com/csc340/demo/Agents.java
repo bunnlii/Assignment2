@@ -2,6 +2,8 @@ package com.csc340.demo;
 
 public class Agents {
 
+    //Agents Class (for video game called Valorant by Riot Games)
+
     public String uuid ;
     public String displayName ;
     public String developerName;
