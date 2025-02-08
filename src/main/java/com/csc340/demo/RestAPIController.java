@@ -6,34 +6,65 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 @RestController
 public class RestAPIController {
-    @GetMapping("agents/{id}")
-    public Object getAgents(@RequestParam String agentID) {
+
+    //Get list of agent uuids
+    @GetMapping("/agents/list")
+    public Object getAllAgents() {
         try {
-            String url = "https://valorant-api.com/v1/agents/" + agentID;
+            String url = "https://valorant-api.com/v1/agents/";
             RestTemplate restTemplate = new RestTemplate();
             ObjectMapper mapper = new ObjectMapper();
-
 
             String jsonListResponse = restTemplate.getForObject(url, String.class);
             JsonNode root = mapper.readTree(jsonListResponse);
 
-            Agents agent = new Agents(root.get("agentID").asText(), root.get("name").asText(), root.get("age").asInt(),
-                    root.get("role").asText());
+            ArrayList<Object> agentsUUIDs = new ArrayList<>();
+            for (JsonNode agentNode : root.path("data")) {
+                String uuid = agentNode.path("uuid").asText();
+                agentsUUIDs.add(uuid);
+            }
+
+            return agentsUUIDs;
+
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(RestAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return "Error fetching agent UUIDs";
+        }
+    }
+
+
+    //get agent info with uuid
+    @GetMapping("/agents/{uuid}")
+    public Object agents(@PathVariable String uuid ) {
+        try {
+            String url = "https://valorant-api.com/v1/agents/" + uuid;
+            RestTemplate restTemplate = new RestTemplate();
+            ObjectMapper mapper = new ObjectMapper();
+
+            String jsonListResponse = restTemplate.getForObject(url, String.class);
+            JsonNode root = mapper.readTree(jsonListResponse);
+
+
+            Agents agent = new Agents(
+                    root.path("data").path("uuid").asText(),
+                    root.path("data").path("displayName").asText(),
+                    root.path("data").path("developerName").asText(),
+                    root.path("data").path("description").asText()
+            );
 
             return agent;
 
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(RestController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error in /agent";
+            Logger.getLogger(RestAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return "Error in /agents/{uuid}";
         }
-
-    }}
-
-
+    }
+}

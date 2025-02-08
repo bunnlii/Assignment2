@@ -2,50 +2,47 @@ package com.csc340.demo;
 
 public class Agents {
 
-    public String id;
-    public String name;
-    public int age;
-    public String role;
+    public String uuid ;
+    public String displayName ;
+    public String developerName;
+    public String description;
 
-    public Agents(String id, String name, int age, String role){
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.role = role;
-
+    public Agents(String uuid, String displayName, String developerName, String description){
+        this.uuid = uuid;
+        this.displayName = displayName;
+        this.developerName = developerName;
+        this.description = description;
     }
 
-    public String getAgentID(){
-        return id;
+    public String getUuid(){
+        return uuid;
     }
 
-    public void setAgentID(String agentID){
-        this.id = agentID;
+    public void setUuid(String uuid ){
+        this.uuid = uuid;
     }
 
-    public String getName(){
-        return name;
+    public String getDisplayName(){
+        return displayName;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setDisplayName(String displayName){
+        this.displayName = displayName;
     }
 
-    public int getAge(){
-        return age;
+    public String getDeveloperName(){
+        return developerName;
     }
 
-    public void setAge(int age){
-        this.age = age;
+    public void setDeveloperName(String developerName){
+        this.developerName = developerName;
     }
 
-    public String getRole(){
-        return role;
+    public String getDescription(){
+        return description;
     }
 
-    public void setRole(String role){
-        this.role = role;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-
 }
